@@ -1,146 +1,131 @@
-type TransactionKind = "deploy" | "score" | "credit";
+import { SeekerOnboardingForm } from "./components/SeekerOnboardingForm";
+
+type OnchainTransactionKind = "deploy" | "creditScore" | "creditRequest";
 
 type BenefitCard = {
-  title: string;
-  description: string;
-  icon: string;
+  benefitTitle: string;
+  benefitDescription: string;
+  benefitIcon: string;
 };
 
-type ProcessStep = {
-  title: string;
-  description: string;
+type PipelineStage = {
+  pipelineStageNumber: number;
+  stageTitle: string;
+  stageDescription: string;
   accentClassName: string;
-  details?: string[];
+  stageDetails?: string[];
 };
 
-type OnboardingStep = {
-  title: string;
-  description: string;
-  icon: string;
-};
-
-type ChainTransaction = {
-  kind: TransactionKind;
-  title: string;
+type OnchainTransaction = {
+  onchainTransactionKind: OnchainTransactionKind;
+  transactionTitle: string;
   functionName: string;
-  hash: `0x${string}`;
-  description: string;
+  transactionHash: `0x${string}`;
+  transactionDescription: string;
 };
 
-const contractAddress = "0x0000000000000000000000000000000000000000";
+const availableCreditAmount = "$2,000";
+const desiredCreditAmount = 1000;
+const monthlyPaymentAmount = "$186.67";
+const interestRatePercent = 2;
+const deployedContractAddress = "0x0000000000000000000000000000000000000000";
 const celoScanBaseUrl = "https://celoscan.io";
 
 const benefitCards: BenefitCard[] = [
   {
-    title: "Smart Credit Building",
-    description:
+    benefitTitle: "Smart Credit Building",
+    benefitDescription:
       "Instead of relying on traditional bureaus, GAITA turns behavior and repayment trust into Web3 reputation.",
-    icon: "01",
+    benefitIcon: "01",
   },
   {
-    title: "Transparent Record",
-    description:
-      "Approvals are emitted as on-chain events, creating a verifiable trail for the user and the protocol.",
-    icon: "02",
+    benefitTitle: "Transparent Record",
+    benefitDescription:
+      "Approvals are emitted as on-chain events, creating a verifiable trail for the Seeker and the protocol.",
+    benefitIcon: "02",
   },
   {
-    title: "Privacy Protected",
-    description:
+    benefitTitle: "Privacy Protected",
+    benefitDescription:
       "The contract stores only the score needed for approval, keeping sensitive off-chain context outside the pool.",
-    icon: "03",
+    benefitIcon: "03",
   },
   {
-    title: "Fair Credit Access",
-    description:
-      "A user with CreditScore >= 50 can request credit without banking history or duplicated active loans.",
-    icon: "04",
+    benefitTitle: "Fair Credit Access",
+    benefitDescription:
+      "A Seeker with CreditScore >= 50 can request credit without banking history or duplicated active loans.",
+    benefitIcon: "04",
   },
 ];
 
-const processSteps: ProcessStep[] = [
+const pipelineStages: PipelineStage[] = [
   {
-    title: "Web2 Reputation Analysis",
-    description:
+    pipelineStageNumber: 1,
+    stageTitle: "Web2 Reputation Analysis",
+    stageDescription:
       "Behavioral signals are translated into the CreditScore value object, using a 0-100 scale.",
     accentClassName: "accent-blue",
   },
   {
-    title: "Financial Pool Formation",
-    description:
+    pipelineStageNumber: 2,
+    stageTitle: "Financial Pool Formation",
+    stageDescription:
       "The CreditPool aggregate represents the lending pool and keeps approval state consistent.",
     accentClassName: "accent-purple",
-    details: [
+    stageDetails: [
       "30% for stability reserve",
       "50% for investors and recovery",
       "20% for direct credit execution",
     ],
   },
   {
-    title: "Smart Contract Approval",
-    description:
+    pipelineStageNumber: 3,
+    stageTitle: "Smart Contract Approval",
+    stageDescription:
       "GaitaCreditPool.sol checks score, active credit, and emits CreditApproved when the request is valid.",
     accentClassName: "accent-cyan",
   },
   {
-    title: "Credit to Transform Lives",
-    description:
+    pipelineStageNumber: 4,
+    stageTitle: "Credit to Transform Lives",
+    stageDescription:
       "Approved users receive a verifiable credit decision they can use to build financial reputation.",
     accentClassName: "accent-green",
   },
 ];
 
-const onboardingSteps: OnboardingStep[] = [
+const onchainTransactionHashes: OnchainTransaction[] = [
   {
-    title: "Basic Information",
-    description: "Name, email, and phone establish the first onboarding context.",
-    icon: "A",
-  },
-  {
-    title: "Verification",
-    description: "Contact proof connects the user to a reliable recovery channel.",
-    icon: "B",
-  },
-  {
-    title: "Digital Identity",
-    description: "Privacy settings prepare the user for reputation analysis.",
-    icon: "C",
-  },
-  {
-    title: "Success",
-    description: "The user is ready to receive a CreditScore and request credit.",
-    icon: "D",
-  },
-];
-
-const chainTransactions: ChainTransaction[] = [
-  {
-    kind: "deploy",
-    title: "Deploy GaitaCreditPool",
+    onchainTransactionKind: "deploy",
+    transactionTitle: "Deploy GaitaCreditPool",
     functionName: "constructor()",
-    hash: "0x1111111111111111111111111111111111111111111111111111111111111111",
-    description:
+    transactionHash:
+      "0x1111111111111111111111111111111111111111111111111111111111111111",
+    transactionDescription:
       "Publishes the aggregate on Celo mainnet and defines the deployer as Owner.",
   },
   {
-    kind: "score",
-    title: "Owner updates CreditScore",
-    functionName: "updateScore(user, score)",
-    hash: "0x2222222222222222222222222222222222222222222222222222222222222222",
-    description:
+    onchainTransactionKind: "creditScore",
+    transactionTitle: "Owner updates CreditScore",
+    functionName: "updateScore(seekerAddress, creditScore)",
+    transactionHash:
+      "0x2222222222222222222222222222222222222222222222222222222222222222",
+    transactionDescription:
       "Registers a 0-100 score. Only the Owner can update this value object.",
   },
   {
-    kind: "credit",
-    title: "User requests credit",
-    functionName: "requestCredit(amount)",
-    hash: "0x3333333333333333333333333333333333333333333333333333333333333333",
-    description:
+    onchainTransactionKind: "creditRequest",
+    transactionTitle: "Seeker requests CreditAmount",
+    functionName: "requestCredit(creditAmount)",
+    transactionHash:
+      "0x3333333333333333333333333333333333333333333333333333333333333333",
+    transactionDescription:
       "Approves credit when score is at least 50 and no active credit exists.",
   },
 ];
 
-function getContractUrl(address: string) {
-  return `${celoScanBaseUrl}/address/${address}`;
+function getContractUrl(contractAddress: string) {
+  return `${celoScanBaseUrl}/address/${contractAddress}`;
 }
 
 function getTransactionUrl(transactionHash: string) {
@@ -172,7 +157,7 @@ export default function Home() {
             </p>
             <div className="glass-note">
               GAITA uses <strong>GaitaCreditPool.sol</strong> as the on-chain
-              aggregate: User, CreditScore, CreditAmount, and approval rules
+              aggregate: Seeker, CreditScore, CreditAmount, and approval rules
               become auditable Celo transactions.
             </div>
             <div className="hero-actions">
@@ -188,7 +173,7 @@ export default function Home() {
           <aside className="credit-calculator" aria-label="Credit calculator">
             <div className="calculator-header">
               <p>Your Available Credit</p>
-              <strong>$2,000</strong>
+              <strong>{availableCreditAmount}</strong>
             </div>
             <label htmlFor="credit-amount">Desired Credit Amount</label>
             <div className="currency-input">
@@ -200,10 +185,10 @@ export default function Home() {
                 name="creditAmount"
                 readOnly
                 type="number"
-                value={1000}
+                value={desiredCreditAmount}
               />
             </div>
-            <p className="input-help">Maximum: $2,000</p>
+            <p className="input-help">Maximum: {availableCreditAmount}</p>
 
             <label htmlFor="installments">Number of Installments</label>
             <select id="installments" name="installments" defaultValue="6">
@@ -215,8 +200,8 @@ export default function Home() {
 
             <div className="payment-panel">
               <p>Your Monthly Payment</p>
-              <strong>$186.67</strong>
-              <span>Interest rate: 2% per month</span>
+              <strong>{monthlyPaymentAmount}</strong>
+              <span>Interest rate: {interestRatePercent}% per month</span>
             </div>
 
             <button className="primary-button calculator-button" type="button">
@@ -237,10 +222,13 @@ export default function Home() {
         </div>
         <div className="page-container benefit-grid">
           {benefitCards.map((benefitCard) => (
-            <article className="glass-card benefit-card" key={benefitCard.title}>
-              <div className="card-icon">{benefitCard.icon}</div>
-              <h3>{benefitCard.title}</h3>
-              <p>{benefitCard.description}</p>
+            <article
+              className="glass-card benefit-card"
+              key={benefitCard.benefitTitle}
+            >
+              <div className="card-icon">{benefitCard.benefitIcon}</div>
+              <h3>{benefitCard.benefitTitle}</h3>
+              <p>{benefitCard.benefitDescription}</p>
             </article>
           ))}
         </div>
@@ -258,27 +246,27 @@ export default function Home() {
           </p>
         </div>
         <div className="page-container process-list">
-          {processSteps.map((processStep, processStepIndex) => (
+          {pipelineStages.map((pipelineStage) => (
             <article
-              className={`process-step ${processStep.accentClassName}`}
-              key={processStep.title}
+              className={`process-step ${pipelineStage.accentClassName}`}
+              key={pipelineStage.stageTitle}
             >
               <div className="process-copy">
                 <div className="step-title-row">
-                  <span>{processStepIndex + 1}</span>
-                  <h3>{processStep.title}</h3>
+                  <span>{pipelineStage.pipelineStageNumber}</span>
+                  <h3>{pipelineStage.stageTitle}</h3>
                 </div>
-                <p>{processStep.description}</p>
-                {processStep.details ? (
+                <p>{pipelineStage.stageDescription}</p>
+                {pipelineStage.stageDetails ? (
                   <ul>
-                    {processStep.details.map((detail) => (
-                      <li key={detail}>{detail}</li>
+                    {pipelineStage.stageDetails.map((stageDetail) => (
+                      <li key={stageDetail}>{stageDetail}</li>
                     ))}
                   </ul>
                 ) : null}
               </div>
               <div className="step-visual">
-                <div>{processStepIndex + 1}</div>
+                <div>{pipelineStage.pipelineStageNumber}</div>
               </div>
             </article>
           ))}
@@ -294,10 +282,14 @@ export default function Home() {
             </h2>
             <p>
               Esta seção mostra a prova pública do fluxo: deploy do contrato,
-              atualização de score pelo Owner e pedido de crédito pelo User.
+              atualização de CreditScore pelo Owner e pedido de crédito pelo
+              Seeker.
               Os hashes são placeholders até o deploy real no Remix.
             </p>
-            <a className="secondary-button" href={getContractUrl(contractAddress)}>
+            <a
+              className="secondary-button"
+              href={getContractUrl(deployedContractAddress)}
+            >
               Contract on CeloScan
             </a>
           </div>
@@ -309,11 +301,11 @@ export default function Home() {
             </div>
             <div className="contract-row">
               <span>Address</span>
-              <code>{contractAddress}</code>
+              <code>{deployedContractAddress}</code>
             </div>
             <div className="contract-rules">
-              <div>creditScore[user] stores 0-100</div>
-              <div>hasActiveCredit[user] blocks duplicates</div>
+              <div>creditScore[seekerAddress] stores 0-100</div>
+              <div>hasActiveCredit[seekerAddress] blocks duplicates</div>
               <div>onlyOwner protects updateScore()</div>
               <div>requestCredit() requires score &gt;= 50</div>
             </div>
@@ -321,20 +313,27 @@ export default function Home() {
         </div>
 
         <div className="page-container transaction-list">
-          {chainTransactions.map((chainTransaction, transactionIndex) => (
-            <article className="transaction-card" key={chainTransaction.hash}>
+          {onchainTransactionHashes.map(
+            (onchainTransaction, onchainTransactionIndex) => (
+            <article
+              className="transaction-card"
+              key={onchainTransaction.transactionHash}
+            >
               <div className="transaction-index">
-                {(transactionIndex + 1).toString().padStart(2, "0")}
+                {(onchainTransactionIndex + 1).toString().padStart(2, "0")}
               </div>
               <div>
-                <span>{chainTransaction.functionName}</span>
-                <h3>{chainTransaction.title}</h3>
-                <p>{chainTransaction.description}</p>
-                <code>{shortenHash(chainTransaction.hash)}</code>
+                <span>{onchainTransaction.functionName}</span>
+                <h3>{onchainTransaction.transactionTitle}</h3>
+                <p>{onchainTransaction.transactionDescription}</p>
+                <code>{shortenHash(onchainTransaction.transactionHash)}</code>
               </div>
-              <a href={getTransactionUrl(chainTransaction.hash)}>CeloScan</a>
+              <a href={getTransactionUrl(onchainTransaction.transactionHash)}>
+                CeloScan
+              </a>
             </article>
-          ))}
+            ),
+          )}
         </div>
       </section>
 
@@ -344,69 +343,12 @@ export default function Home() {
             Ready to Start Your <span>Financial Journey</span>?
           </h2>
           <p>
-            A recreated four-step onboarding flow that prepares a user for
+            A recreated four-step onboarding flow that prepares a Seeker for
             reputation scoring and credit approval.
           </p>
         </div>
 
-        <div className="page-container onboarding-grid">
-          <aside className="creation-process">
-            <h3>Creation Process</h3>
-            {onboardingSteps.map((onboardingStep, onboardingStepIndex) => (
-              <div className="onboarding-step" key={onboardingStep.title}>
-                <div className="step-marker">
-                  <span>{onboardingStepIndex + 1}</span>
-                  {onboardingStepIndex < onboardingSteps.length - 1 ? (
-                    <i aria-hidden="true" />
-                  ) : null}
-                </div>
-                <div>
-                  <h4>
-                    <span>{onboardingStep.icon}</span>
-                    {onboardingStep.title}
-                  </h4>
-                  <p>{onboardingStep.description}</p>
-                </div>
-              </div>
-            ))}
-            <div className="security-box">
-              <h4>Security Guarantees</h4>
-              <p>End-to-end cryptography</p>
-              <p>Full LGPD compliance</p>
-              <p>User controls shared data</p>
-              <p>International Web3 standard</p>
-            </div>
-          </aside>
-
-          <form className="onboarding-form">
-            <div className="progress-row">
-              <span>Step 1 of 4</span>
-              <strong>25%</strong>
-            </div>
-            <div className="progress-track">
-              <span />
-            </div>
-            <div className="form-heading">
-              <div>U</div>
-              <h3>Let&apos;s Get to Know You</h3>
-              <p>Tell us a bit about yourself to get started.</p>
-            </div>
-            <label htmlFor="full-name">Your Full Name</label>
-            <input id="full-name" name="fullName" placeholder="Enter your complete name" />
-            <label htmlFor="email">Your Email Address</label>
-            <input
-              id="email"
-              name="email"
-              placeholder="your.email@example.com"
-              type="email"
-            />
-            <label htmlFor="phone">Your Phone Number</label>
-            <input id="phone" name="phone" placeholder="(11) 99999-9999" />
-            <button className="primary-button calculator-button" type="button">
-              Continue to Next Step
-            </button>
-          </form>
-        </div>
+        <SeekerOnboardingForm />
       </section>
     </main>
   );

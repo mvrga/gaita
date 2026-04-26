@@ -260,7 +260,8 @@ select {
 
 .credit-calculator input:focus,
 .credit-calculator select:focus,
-.onboarding-form input:focus {
+.onboarding-form input:focus,
+.onboarding-form button:focus-visible {
   border-color: #22d3ee;
   box-shadow: 0 0 0 4px rgb(34 211 238 / 0.16);
 }
@@ -643,7 +644,7 @@ code {
   font-weight: 900;
 }
 
-.step-marker i {
+.step-line {
   width: 2px;
   min-height: 52px;
   margin-top: 8px;
@@ -659,6 +660,14 @@ code {
 }
 
 .onboarding-step h4 span {
+  color: #67e8f9;
+}
+
+.active-onboarding-step .step-marker span {
+  box-shadow: 0 0 0 6px rgb(34 211 238 / 0.14);
+}
+
+.active-onboarding-step h4 {
   color: #67e8f9;
 }
 
@@ -705,10 +714,10 @@ code {
 
 .progress-track span {
   display: block;
-  width: 25%;
   height: 100%;
   border-radius: inherit;
   background: linear-gradient(90deg, #22d3ee, #0891b2);
+  transition: width 180ms ease;
 }
 
 .form-heading {
@@ -730,7 +739,59 @@ code {
 }
 
 .onboarding-form input {
-  margin-bottom: 14px;
+  margin-bottom: 8px;
+}
+
+.field-error {
+  margin: 0 0 12px;
+  color: #fca5a5;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.success-toast {
+  margin-bottom: 18px;
+  border: 1px solid rgb(74 222 128 / 0.36);
+  border-radius: 14px;
+  background: rgb(74 222 128 / 0.12);
+  color: #bbf7d0;
+  padding: 14px 16px;
+  font-weight: 800;
+}
+
+.form-action-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.form-action-row .primary-button,
+.form-action-row .secondary-button {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.identity-preview {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 22px;
+  border: 1px solid rgb(34 211 238 / 0.2);
+  border-radius: 16px;
+  background: rgb(34 211 238 / 0.08);
+  padding: 16px;
+}
+
+.identity-preview span {
+  color: #67e8f9;
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.identity-preview strong {
+  color: #ffffff;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 980px) {
@@ -788,5 +849,9 @@ code {
 
   .transaction-card a {
     width: 100%;
+  }
+
+  .form-action-row {
+    grid-template-columns: 1fr;
   }
 }
