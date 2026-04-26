@@ -7,8 +7,8 @@ const appleWebAppCapable = "yes";
 const appleWebAppStatusBarStyle = "black-translucent";
 
 export const metadata: Metadata = {
-  title: "GAITA Credit Pool",
-  description: "Proof of Ship credit reputation flow for Celo.",
+  title: "GAITA Financial Reputation",
+  description: "Proof of Ship financial reputation flow for Celo.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
