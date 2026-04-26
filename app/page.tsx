@@ -1,3 +1,4 @@
+import { MiniPayCompatibilityPanel } from "./components/MiniPayCompatibilityPanel";
 import { SeekerOnboardingForm } from "./components/SeekerOnboardingForm";
 
 type OnchainTransactionKind = "deploy" | "creditScore" | "creditRequest";
@@ -29,7 +30,7 @@ const desiredCreditAmount = 1000;
 const monthlyPaymentAmount = "$186.67";
 const interestRatePercent = 2;
 const deployedContractAddress = "0xbf294362cE805Db2B7378122A94f081C627eaD64";
-const celoScanBaseUrl = "https://celo-sepolia.blockscout.com";
+const celoScanBaseUrl = "https://celoscan.io";
 
 const benefitCards: BenefitCard[] = [
   {
@@ -100,16 +101,16 @@ const onchainTransactionHashes: OnchainTransaction[] = [
     transactionTitle: "Deploy GaitaCreditPool",
     functionName: "constructor()",
     transactionHash:
-      "0xdb1f602a5b140125c41a6b1f9566f9e0179ad22916e54d6206f810878ac06e02",
+      "0xdc2db333e7d7dacf5560ac5925cbaf48c9f1a6c8cde123c09635858a4f9034f6",
     transactionDescription:
-      "Publishes the aggregate on Celo Sepolia testnet and defines the deployer as Owner.",
+      "Publishes the aggregate on Celo mainnet and defines the deployer as Owner.",
   },
   {
     onchainTransactionKind: "creditScore",
     transactionTitle: "Owner updates CreditScore",
     functionName: "updateScore(seekerAddress, creditScore)",
     transactionHash:
-      "0x02801d2877c6671a0e7fb0225f8c28b0d297e17e21a72a493fd54d0904af9f7c",
+      "0xe2c53127e567319fe956db9c33696b5a9f4bd75c69450b1f6b4b6a28ca1d38a8",
     transactionDescription:
       "Registers a 75 credit score for seeker 0xE83451E8757045286E4B227a6BB2065d44fb7C4b.",
   },
@@ -118,7 +119,7 @@ const onchainTransactionHashes: OnchainTransaction[] = [
     transactionTitle: "Seeker requests CreditAmount",
     functionName: "requestCredit(creditAmount)",
     transactionHash:
-      "0x508b8ae84282e3a08571c7d79e89e77e5cdb6987e15c4c6458007d9c1a2607e8",
+      "0xa3f0c88935360e64a1c9310c5d08911feed8ea3cc0c89bd5b934779321131188",
     transactionDescription:
       "Approves credit for seeker with score 75. Amount: 100 CELO.",
   },
@@ -168,6 +169,7 @@ export default function Home() {
                 View Proof of Ship
               </a>
             </div>
+            <MiniPayCompatibilityPanel />
           </div>
 
           <aside className="credit-calculator" aria-label="Credit calculator">
@@ -283,8 +285,8 @@ export default function Home() {
             <p>
               This section shows the public proof of the flow: contract
               deployment, CreditScore update by the Owner, and credit request by
-              the Seeker. The hashes are real Celo Sepolia testnet transactions
-              until the mainnet deploy is complete.
+              the Seeker. These are real Celo mainnet transactions for the
+              Proof of Ship submission.
             </p>
             <a
               className="secondary-button"

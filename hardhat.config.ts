@@ -3,10 +3,22 @@ import "dotenv/config";
 import hardhatToolboxViemPlugin from "@nomicfoundation/hardhat-toolbox-viem";
 import { defineConfig } from "hardhat/config";
 
+function resolvePrivateKeyAccounts() {
+  const configuredPrivateKey = process.env.PRIVATE_KEY;
+
+  if (configuredPrivateKey === undefined || configuredPrivateKey === "") {
+    return [];
+  }
+
+  const normalizedPrivateKey = configuredPrivateKey.startsWith("0x")
+    ? configuredPrivateKey
+    : `0x${configuredPrivateKey}`;
+
+  return [normalizedPrivateKey];
+}
+
 const privateKeyAccounts =
-  process.env.PRIVATE_KEY === undefined || process.env.PRIVATE_KEY === ""
-    ? []
-    : [process.env.PRIVATE_KEY];
+  resolvePrivateKeyAccounts();
 
 export default defineConfig({
   plugins: [hardhatToolboxViemPlugin],
