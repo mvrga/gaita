@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="GAITA app icon">
+  <rect width="512" height="512" rx="112" fill="#000000"/>
+  <circle cx="256" cy="256" r="188" fill="url(#gaitaGradient)"/>
+  <path d="M325 203c-17-31-46-52-86-52-59 0-102 45-102 105s43 105 104 105c51 0 91-29 104-76h-91v-43h151v33c-11 80-75 136-164 136-91 0-161-67-161-155S150 101 239 101c65 0 118 32 145 83l-59 19Z" fill="#020617"/>
+  <defs>
+    <linearGradient id="gaitaGradient" x1="88" x2="424" y1="112" y2="400" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+  </defs>
+</svg>
