@@ -1,7 +1,5 @@
 # GAITA
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-22d3ee.svg)](./LICENSE)
-
 GAITA is a Proof of Ship project for Celo that turns financial reputation into an on-chain credit approval flow.
 
 GAITA e um projeto Proof of Ship para Celo que transforma reputacao financeira em um fluxo de aprovacao de credito on-chain.
