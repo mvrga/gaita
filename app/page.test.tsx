@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
 import Home from "./page";
@@ -25,9 +25,11 @@ describe("Home page", () => {
       "Desired Credit Amount",
     ) as HTMLInputElement;
     expect(desiredCreditAmountInput.value).toBe("1000");
-    expect(desiredCreditAmountInput.readOnly).toBe(true);
+    expect(desiredCreditAmountInput.readOnly).toBe(false);
     expect(desiredCreditAmountInput.getAttribute("min")).toBe("1");
     expect(desiredCreditAmountInput.getAttribute("max")).toBe("2000");
+    fireEvent.change(desiredCreditAmountInput, { target: { value: "1500" } });
+    expect(desiredCreditAmountInput.value).toBe("1500");
 
     const installmentSelector = screen.getByLabelText(
       "Number of Installments",
@@ -37,9 +39,13 @@ describe("Home page", () => {
     expect(screen.getByRole("option", { name: "6 installments" })).toBeTruthy();
     expect(screen.getByRole("option", { name: "9 installments" })).toBeTruthy();
     expect(screen.getByRole("option", { name: "12 installments" })).toBeTruthy();
-    expect(screen.getByText("$2,000")).toBeTruthy();
-    expect(screen.getByText("$186.67")).toBeTruthy();
+    expect(screen.getAllByText("$2,000.00").length).toBeGreaterThan(0);
+    expect(screen.getByText("$280.00")).toBeTruthy();
     expect(screen.getByText("Interest rate: 2% per month")).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Continue with Credit" }));
+    expect(localStorage.getItem("creditAmountIntent")).toContain(
+      '"desiredCreditAmount":1500',
+    );
 
     expect(screen.getByText(deployedContractAddress)).toBeTruthy();
     expect(

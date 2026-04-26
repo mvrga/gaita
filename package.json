@@ -19,7 +19,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "packageManager": "pnpm@10.28.0",
   "dependencies": {
     "@rainbow-me/rainbowkit": "^2.2.10",

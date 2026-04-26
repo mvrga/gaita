@@ -58,7 +58,7 @@ export function MiniPayCompatibilityPanel() {
       <button
         aria-label="Connect MiniPay wallet"
         className="secondary-button minipay-button"
-        disabled={miniPayCompatibilityStatus === "unavailable"}
+        disabled={miniPayCompatibilityStatus === "checking"}
         onClick={connectMiniPayWallet}
         type="button"
       >

@@ -1,3 +1,4 @@
+import { CreditCalculator } from "./components/CreditCalculator";
 import { MiniPayCompatibilityPanel } from "./components/MiniPayCompatibilityPanel";
 import { SeekerOnboardingForm } from "./components/SeekerOnboardingForm";
 
@@ -25,10 +26,6 @@ type OnchainTransaction = {
   transactionDescription: string;
 };
 
-const availableCreditAmount = "$2,000";
-const desiredCreditAmount = 1000;
-const monthlyPaymentAmount = "$186.67";
-const interestRatePercent = 2;
 const deployedContractAddress = "0xbf294362cE805Db2B7378122A94f081C627eaD64";
 const celoScanBaseUrl = "https://celoscan.io";
 
@@ -172,44 +169,7 @@ export default function Home() {
             <MiniPayCompatibilityPanel />
           </div>
 
-          <aside className="credit-calculator" aria-label="Credit calculator">
-            <div className="calculator-header">
-              <p>Your Available Credit</p>
-              <strong>{availableCreditAmount}</strong>
-            </div>
-            <label htmlFor="credit-amount">Desired Credit Amount</label>
-            <div className="currency-input">
-              <span>$</span>
-              <input
-                id="credit-amount"
-                max={2000}
-                min={1}
-                name="creditAmount"
-                readOnly
-                type="number"
-                value={desiredCreditAmount}
-              />
-            </div>
-            <p className="input-help">Maximum: {availableCreditAmount}</p>
-
-            <label htmlFor="installments">Number of Installments</label>
-            <select id="installments" name="installments" defaultValue="6">
-              <option value="3">3 installments</option>
-              <option value="6">6 installments</option>
-              <option value="9">9 installments</option>
-              <option value="12">12 installments</option>
-            </select>
-
-            <div className="payment-panel">
-              <p>Your Monthly Payment</p>
-              <strong>{monthlyPaymentAmount}</strong>
-              <span>Interest rate: {interestRatePercent}% per month</span>
-            </div>
-
-            <button className="primary-button calculator-button" type="button">
-              Continue with Credit
-            </button>
-          </aside>
+          <CreditCalculator />
         </div>
       </section>
 

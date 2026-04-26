@@ -8,6 +8,7 @@ import { SeekerOnboardingForm } from "./SeekerOnboardingForm";
 const seekerNamePlaceholder = "Maria Silva";
 const emailAddressPlaceholder = "maria@example.com";
 const phoneNumberPlaceholder = "+55 11 99999-9999";
+const typedPhoneNumber = "+5511999999999";
 const verificationCodePlaceholder = "482913";
 const generatedIdentitySeed = "12345678-1234-1234-1234-123456789abc";
 const fixedCreatedAtTimestamp = 1_777_202_400_000;
@@ -79,7 +80,7 @@ describe("SeekerOnboardingForm", () => {
       target: { value: emailAddressPlaceholder },
     });
     fireEvent.change(phoneNumberInput, {
-      target: { value: phoneNumberPlaceholder },
+      target: { value: typedPhoneNumber },
     });
     fireEvent.click(
       screen.getByRole("button", {
@@ -122,7 +123,7 @@ describe("SeekerOnboardingForm", () => {
     expect(completedSeekerSession.reputationData).toEqual({
       seekerName: seekerNamePlaceholder,
       emailAddress: emailAddressPlaceholder,
-      phoneNumber: phoneNumberPlaceholder,
+      phoneNumber: typedPhoneNumber,
     });
     expect(completedSeekerSession.digitalIdentity?.onchainIdentity).toBe(
       "0x12345678123412341234123456789abc19dc9848b00",

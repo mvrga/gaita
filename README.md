@@ -1,5 +1,7 @@
 # GAITA
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-22d3ee.svg)](./LICENSE)
+
 GAITA is a Proof of Ship project for Celo that turns financial reputation into an on-chain credit approval flow.
 
 GAITA e um projeto Proof of Ship para Celo que transforma reputacao financeira em um fluxo de aprovacao de credito on-chain.
@@ -13,14 +15,20 @@ GAITA helps a credit seeker build a Web3 financial reputation and request credit
 What the current experience shows:
 
 - A Web3 financial reputation landing page.
-- A credit calculator with available credit, monthly payment, and interest rate.
+- An interactive credit calculator with available credit, monthly payment, and interest rate.
 - A four-step onboarding flow for the Seeker.
 - Semantic reputation fields: `seekerName`, `emailAddress`, and `phoneNumber`.
 - A simulated `VerificationCode` step.
 - A fake `DigitalIdentity.onchainIdentity` generated during onboarding.
-- A Proof of Ship section with contract and CeloScan transaction placeholders.
+- A MiniPay compatibility panel for the Seeker wallet.
+- A Proof of Ship section with the real Celo Mainnet contract and CeloScan transactions.
 
-Important: contract address and transaction hashes are placeholders until the real Remix deploy is completed.
+Mainnet proof:
+
+- Contract: `0xbf294362cE805Db2B7378122A94f081C627eaD64`
+- Deploy: `0xdc2db333e7d7dacf5560ac5925cbaf48c9f1a6c8cde123c09635858a4f9034f6`
+- `updateScore()`: `0xe2c53127e567319fe956db9c33696b5a9f4bd75c69450b1f6b4b6a28ca1d38a8`
+- `requestCredit()`: `0xa3f0c88935360e64a1c9310c5d08911feed8ea3cc0c89bd5b934779321131188`
 
 ### Portugues
 
@@ -29,14 +37,20 @@ GAITA ajuda uma pessoa que busca credito, chamada Seeker, a construir reputacao 
 O que a experiencia atual mostra:
 
 - Uma landing page de reputacao financeira Web3.
-- Uma calculadora de credito com valor disponivel, parcela mensal e taxa de juros.
+- Uma calculadora de credito interativa com valor disponivel, parcela mensal e taxa de juros.
 - Um onboarding de 4 passos para o Seeker.
 - Campos semanticos de reputacao: `seekerName`, `emailAddress` e `phoneNumber`.
 - Uma etapa simulada de `VerificationCode`.
 - Uma `DigitalIdentity.onchainIdentity` fake gerada durante o onboarding.
-- Uma secao Proof of Ship com contrato e transacoes placeholder no CeloScan.
+- Um painel de compatibilidade MiniPay para a carteira do Seeker.
+- Uma secao Proof of Ship com contrato real na Celo Mainnet e transacoes reais no CeloScan.
 
-Importante: endereco do contrato e hashes de transacao ainda sao placeholders ate o deploy real pelo Remix.
+Prova mainnet:
+
+- Contrato: `0xbf294362cE805Db2B7378122A94f081C627eaD64`
+- Deploy: `0xdc2db333e7d7dacf5560ac5925cbaf48c9f1a6c8cde123c09635858a4f9034f6`
+- `updateScore()`: `0xe2c53127e567319fe956db9c33696b5a9f4bd75c69450b1f6b4b6a28ca1d38a8`
+- `requestCredit()`: `0xa3f0c88935360e64a1c9310c5d08911feed8ea3cc0c89bd5b934779321131188`
 
 ## Domain Language
 
@@ -90,13 +104,17 @@ Stack:
 - Node Test Runner
 - Vitest
 - PWA manifest and service worker
+- MiniPay compatibility hook
 
 Main files:
 
 - `contracts/GaitaCreditPool.sol`: Solidity aggregate for credit approval.
 - `test/GaitaCreditPool.ts`: contract tests written before the contract implementation.
 - `app/page.tsx`: main landing page and Proof of Ship sections.
+- `app/components/CreditCalculator.tsx`: interactive calculator that stores a `creditAmountIntent`.
+- `app/components/MiniPayCompatibilityPanel.tsx`: MiniPay compatibility panel for the Seeker wallet.
 - `app/components/SeekerOnboardingForm.tsx`: interactive domain onboarding flow.
+- `app/hooks/useMiniPayCompatibility.ts`: hook that detects the injected MiniPay wallet provider.
 - `app/components/GaitaPwaRegistration.tsx`: service worker registration.
 - `public/manifest.json`: PWA manifest.
 - `public/sw.js`: service worker with `cacheStaticAssets()` and `fetchWithNetworkFallback()`.
@@ -115,13 +133,17 @@ Stack:
 - Node Test Runner
 - Vitest
 - Manifest PWA e service worker
+- Hook de compatibilidade MiniPay
 
 Arquivos principais:
 
 - `contracts/GaitaCreditPool.sol`: agregado Solidity para aprovacao de credito.
 - `test/GaitaCreditPool.ts`: testes do contrato escritos antes da implementacao.
 - `app/page.tsx`: landing page principal e secoes Proof of Ship.
+- `app/components/CreditCalculator.tsx`: calculadora interativa que salva uma `creditAmountIntent`.
+- `app/components/MiniPayCompatibilityPanel.tsx`: painel de compatibilidade MiniPay para a carteira do Seeker.
 - `app/components/SeekerOnboardingForm.tsx`: fluxo interativo de onboarding com linguagem de dominio.
+- `app/hooks/useMiniPayCompatibility.ts`: hook que detecta o provider injetado da carteira MiniPay.
 - `app/components/GaitaPwaRegistration.tsx`: registro do service worker.
 - `public/manifest.json`: manifest PWA.
 - `public/sw.js`: service worker com `cacheStaticAssets()` e `fetchWithNetworkFallback()`.
@@ -196,6 +218,13 @@ Build:
 pnpm build
 ```
 
+Deploy to Vercel:
+
+```bash
+pnpm build
+vercel --prod
+```
+
 ### Portugues
 
 Instalar dependencias:
@@ -232,6 +261,13 @@ Gerar build:
 
 ```bash
 pnpm build
+```
+
+Deploy na Vercel:
+
+```bash
+pnpm build
+vercel --prod
 ```
 
 ## Celo Deployment
@@ -408,25 +444,45 @@ Para Celo Mainnet, compre CELO em uma exchange suportada ou envie ativos para a 
 
 ### English
 
-The Proof of Ship section currently uses placeholders:
+The Proof of Ship section uses real Celo Mainnet data:
 
-- deployed contract address
-- deploy transaction hash
-- `updateScore()` transaction hash
-- `requestCredit()` transaction hash
+- Contract: `https://celoscan.io/address/0xbf294362cE805Db2B7378122A94f081C627eaD64`
+- Deploy: `https://celoscan.io/tx/0xdc2db333e7d7dacf5560ac5925cbaf48c9f1a6c8cde123c09635858a4f9034f6`
+- `updateScore()`: `https://celoscan.io/tx/0xe2c53127e567319fe956db9c33696b5a9f4bd75c69450b1f6b4b6a28ca1d38a8`
+- `requestCredit()`: `https://celoscan.io/tx/0xa3f0c88935360e64a1c9310c5d08911feed8ea3cc0c89bd5b934779321131188`
 
-After the real Celo deployment, replace the placeholders in `app/page.tsx`.
+This satisfies the campaign requirement to deploy a smart contract on Celo Mainnet and show visible on-chain proof in the frontend.
 
 ### Portugues
 
-A secao Proof of Ship usa placeholders neste momento:
+A secao Proof of Ship usa dados reais da Celo Mainnet:
 
-- endereco do contrato publicado
-- hash da transacao de deploy
-- hash da transacao `updateScore()`
-- hash da transacao `requestCredit()`
+- Contrato: `https://celoscan.io/address/0xbf294362cE805Db2B7378122A94f081C627eaD64`
+- Deploy: `https://celoscan.io/tx/0xdc2db333e7d7dacf5560ac5925cbaf48c9f1a6c8cde123c09635858a4f9034f6`
+- `updateScore()`: `https://celoscan.io/tx/0xe2c53127e567319fe956db9c33696b5a9f4bd75c69450b1f6b4b6a28ca1d38a8`
+- `requestCredit()`: `https://celoscan.io/tx/0xa3f0c88935360e64a1c9310c5d08911feed8ea3cc0c89bd5b934779321131188`
 
-Depois do deploy real na Celo, substitua os placeholders em `app/page.tsx`.
+Isso atende ao requisito da campanha de publicar um smart contract na Celo Mainnet e mostrar prova on-chain visivel no frontend.
+
+## MiniPay
+
+### English
+
+GAITA includes one MiniPay compatibility hook:
+
+- `useMiniPayCompatibility()` checks for an injected wallet provider.
+- `MiniPayCompatibilityPanel` shows provider status, Celo network, and Seeker wallet state.
+- In a regular browser, the panel explains that the app should be opened inside MiniPay.
+- Inside MiniPay, the same hook can resolve the Seeker wallet through the injected provider.
+
+### Portugues
+
+GAITA inclui um hook de compatibilidade MiniPay:
+
+- `useMiniPayCompatibility()` verifica se existe um provider de carteira injetado.
+- `MiniPayCompatibilityPanel` mostra status do provider, rede Celo e estado da carteira do Seeker.
+- Em navegador comum, o painel explica que o app deve ser aberto dentro do MiniPay.
+- Dentro do MiniPay, o mesmo hook consegue resolver a carteira do Seeker pelo provider injetado.
 
 ## PWA
 
@@ -471,15 +527,17 @@ Implemented:
 - TDD contract tests.
 - `GaitaCreditPool.sol`.
 - Landing page inspired by the previous GAITA visual identity.
+- Interactive credit calculator.
 - Interactive Seeker onboarding.
-- Proof of Ship placeholder section.
+- MiniPay compatibility hook and panel.
+- Proof of Ship section with real Celo Mainnet contract and transactions.
 - PWA manifest and service worker.
+- Frontend tests for MiniPay, calculator fields, onboarding placeholders, and `DigitalIdentity` creation.
 
 Pending:
 
-- Real Celo deployment.
-- Replacement of contract and transaction placeholders.
-- Optional frontend tests for onboarding behavior.
+- Vercel production deployment URL.
+- Campaign submission.
 
 ### Portugues
 
@@ -488,12 +546,14 @@ Implementado:
 - Testes TDD do contrato.
 - `GaitaCreditPool.sol`.
 - Landing page inspirada na identidade visual anterior do GAITA.
+- Calculadora de credito interativa.
 - Onboarding interativo do Seeker.
-- Secao Proof of Ship com placeholders.
+- Hook e painel de compatibilidade MiniPay.
+- Secao Proof of Ship com contrato e transacoes reais na Celo Mainnet.
 - Manifest PWA e service worker.
+- Testes de frontend para MiniPay, campos da calculadora, placeholders do onboarding e criacao de `DigitalIdentity`.
 
 Pendente:
 
-- Deploy real na Celo.
-- Substituicao dos placeholders de contrato e transacoes.
-- Testes opcionais de frontend para o comportamento do onboarding.
+- URL de producao na Vercel.
+- Submissao na campanha.

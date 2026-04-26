@@ -92,18 +92,22 @@ function validateReputationData(
 ): ReputationValidationErrors {
   const validationErrors: ReputationValidationErrors = {};
   const trimmedSeekerName = reputationData.seekerName.trim();
+  const trimmedEmailAddress = reputationData.emailAddress.trim();
+  const normalizedPhoneNumber = reputationData.phoneNumber.replace(/\D/g, "");
   const validEmailAddressPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const validPhoneNumberPattern = /^\+55\s\d{2}\s\d{4,5}-\d{4}$/;
+  const hasValidBrazilianPhoneNumber =
+    normalizedPhoneNumber.length === 12 || normalizedPhoneNumber.length === 13;
+  const hasBrazilCountryCode = normalizedPhoneNumber.startsWith("55");
 
   if (!trimmedSeekerName) {
     validationErrors.seekerName = "Please provide a seekerName";
   }
 
-  if (!validEmailAddressPattern.test(reputationData.emailAddress)) {
+  if (!validEmailAddressPattern.test(trimmedEmailAddress)) {
     validationErrors.emailAddress = "Please provide a valid emailAddress";
   }
 
-  if (!validPhoneNumberPattern.test(reputationData.phoneNumber)) {
+  if (!hasBrazilCountryCode || !hasValidBrazilianPhoneNumber) {
     validationErrors.phoneNumber =
       "Please provide a phoneNumber with DDD, like +55 11 99999-9999";
   }
@@ -195,6 +199,11 @@ export function SeekerOnboardingForm() {
     setVerificationCode({
       expectedVerificationCode: createVerificationCode(),
       providedVerificationCode: "",
+    });
+    setReputationData({
+      seekerName: reputationData.seekerName.trim(),
+      emailAddress: reputationData.emailAddress.trim(),
+      phoneNumber: reputationData.phoneNumber.trim(),
     });
     setOnboardingStatus("verifying");
   }
