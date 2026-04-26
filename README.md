@@ -6,6 +6,10 @@ GAITA is a Proof of Ship project for Celo that turns financial reputation into a
 
 GAITA e um projeto Proof of Ship para Celo que transforma reputacao financeira em um fluxo de aprovacao de credito on-chain.
 
+Production app: `https://gaita-bice.vercel.app`
+
+Aplicacao em producao: `https://gaita-bice.vercel.app`
+
 ## For Users
 
 ### English
@@ -225,6 +229,12 @@ pnpm build
 vercel --prod
 ```
 
+Current production URL:
+
+```txt
+https://gaita-bice.vercel.app
+```
+
 ### Portugues
 
 Instalar dependencias:
@@ -268,6 +278,12 @@ Deploy na Vercel:
 ```bash
 pnpm build
 vercel --prod
+```
+
+URL atual de producao:
+
+```txt
+https://gaita-bice.vercel.app
 ```
 
 ## Celo Deployment
@@ -536,7 +552,6 @@ Implemented:
 
 Pending:
 
-- Vercel production deployment URL.
 - Campaign submission.
 
 ### Portugues
@@ -555,5 +570,4 @@ Implementado:
 
 Pendente:
 
-- URL de producao na Vercel.
 - Submissao na campanha.
