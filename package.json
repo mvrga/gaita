@@ -11,7 +11,11 @@
     "lint": "eslint .",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "deploy:sepolia": "hardhat run scripts/deploy.ts --network celoSepolia",
+    "interact:sepolia": "hardhat run scripts/interact.ts --network celoSepolia",
+    "deploy:celo": "hardhat run scripts/deploy.ts --network celo",
+    "interact:celo": "hardhat run scripts/interact.ts --network celo"
   },
   "keywords": [],
   "author": "",
@@ -37,6 +41,7 @@
     "@typescript-eslint/parser": "^8.59.0",
     "@vitejs/plugin-react": "^6.0.1",
     "autoprefixer": "latest",
+    "dotenv": "^17.4.2",
     "eslint": "^10.2.1",
     "hardhat": "^3.4.1",
     "jsdom": "^29.0.2",
